@@ -17,7 +17,7 @@ from PIL import ImageDraw
 window=tk.Tk()
 window.title('Animation')
 
-iwidth = 2600
+iwidth = 2700
 iheight = 1600
 
 c = tk.Canvas(window, height=iheight, width=iwidth)
@@ -40,12 +40,16 @@ ye1=140
 xe2=320
 ye2=140
 
-shift=20
+shift=10
 shifteye=10
 
 
-for i in range(1,4):
-    image1 = Image.new("RGB", (iwidth, iheight), 'white')
+for i in range(1,10):
+    
+    image1 = Image.open("images/mars-landscape-1-1200.jpg")
+    image1.resize([iwidth,iheight], Image.LANCZOS)
+    
+    #image1 = Image.new("RGB", (iwidth, iheight), 'white')
     draw = ImageDraw.Draw(image1)
     draw.line([0,0,(i-1)*150,0],'blue')
     draw.line([0,0,0,(i-1)*165],'red')
@@ -78,7 +82,7 @@ for i in range(1,4):
     #if i%10==0:
     #    step=step*-1
     #draw.line([50+i*10,50,100,100],'black')
-    filename = "movieimages/aliens"+str(i)+".jpg"
+    filename = "movie-images/aliens"+str(i)+".jpg"
     image1.save(filename)  
     del draw
 
