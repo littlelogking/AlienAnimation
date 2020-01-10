@@ -67,9 +67,11 @@ for i in range(1,10):
     image1 = Image.open("images/mars-landscape-1-1200.jpg")
     image1.resize([iwidth,iheight], Image.LANCZOS)
     
-    #this adds draw
+    #creates the new image
     #image1 = Image.new("RGB", (iwidth, iheight), 'white')
     draw = ImageDraw.Draw(image1)
+    
+    # draws lines but cant see with background on
     draw.line([0,0,(i-1)*150,0],'blue')
     draw.line([0,0,0,(i-1)*165],'red')
   
@@ -88,7 +90,7 @@ for i in range(1,10):
     if i%10==0:
         shifteye=shifteye*-1
         shifteyeb=shifteyeb*-1    
-    #this draws the aliens
+    #this draws the first alien
     x1=x1+shift
     xe1=xe1+shifteye+shift
     xe2=xe2+shifteye+shift
@@ -96,8 +98,9 @@ for i in range(1,10):
     draw.ellipse([xe1, ye1, xe1+40, ye1+40],'blue')
     draw.ellipse([xe2, ye2, xe2+40, ye2+40],'blue')
     
-       
-
+    #TODO   
+    #this draws the second alien(b)
+    #eyes don't get shifted 
     x1b=x1b+shiftb
     xe1b=xe1b+shifteyeb+shiftb
     xe2b=xe2b+shifteyeb+shiftb
