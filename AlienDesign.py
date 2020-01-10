@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Nov 28 19:30:38 2019
 
-@author: suilven
+
 """
+from tkinter import *
 
+window=Tk()
+window.title('Alien')
+
+c = Canvas(window, height=1800, width=2800)
+c.pack()
