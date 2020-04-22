@@ -13,19 +13,31 @@ import os
 from PIL import Image
 from PIL import ImageDraw
 
-#this gets window ready
-window=tk.Tk()
-window.title('Animation')
+#functions
+#These will make the program neater.
 
-iwidth = 2700
+def windowprep(iwidth,iheight):
+    window=tk.Tk()
+    window.title('Animation')
+
+    c = tk.Canvas(window, height=iheight, width=iwidth)
+    c.pack
+    
+    return window
+#this gets window ready
+#window=tk.Tk()
+#window.title('Animation')
+
+#iwidth = 2700
+#iheight = 1600
+
+#c = tk.Canvas(window, height=iheight, width=iwidth)
+#c.pack()
+
+iwidth = 2700 
 iheight = 1600
 
-c = tk.Canvas(window, height=iheight, width=iwidth)
-c.pack()
-
-
-
-
+window=windowprep(iwidth, iheight)
 
 #this makes an image
 str1 = "square"
@@ -61,11 +73,11 @@ shifteyeb=10
 
 
 #start of loop to draw alien at each time step
-for i in range(1,10):
+for i in range(1,25):
     
     #this adds a backround to the animation
-    #image1 = Image.open("images/mars-landscape-1-1200.jpg")
-    #image1.resize([iwidth,iheight], Image.LANCZOS)
+    image1 = Image.open("images/mars-landscape-1-1200.jpg")
+    image1.resize([iwidth,iheight], Image.LANCZOS)
     
     #creates the new image
     image1 = Image.new("RGB", (iwidth, iheight), 'white')
