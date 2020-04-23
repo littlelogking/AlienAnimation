@@ -24,6 +24,73 @@ def windowprep(iwidth,iheight):
     c.pack
     
     return window
+
+def initdrawdata():    
+    ddata={ 
+    'step': 5,
+    'x1': 100,
+    'y1': 100,
+    'xe1': 220,
+    'ye1': 140,
+    'xe2': 320,
+    'ye2': 140,
+    
+    #shift moves the cirles 
+    'shift': 10,
+    'shifteye': 10,
+    
+    
+    'x1b': 100+700,
+    'y1b': 100,
+    'xe1b': 220+700,
+    'ye1b': 140,
+    'xe2b': 320+700,
+    'ye2b': 140,
+    
+    'shiftb': -10,
+    'shifteyeb': 10
+    }
+    
+    #acces daata item using 
+    #ddata['step']
+    return ddata
+
+def drawaliena(draw, ddat,i):
+    status=0
+    
+    if i%10==0:
+        ddat['shifteye']=ddat['shifteye']*-1
+            
+    #this draws the first alien
+    ddat['x1']=ddat['x1']+ddat['shift']
+    ddat['xe1']=ddat['xe1']+ddat['shifteye']+ddat['shift']
+    ddat['xe2']=ddat['xe2']+ddat['shifteye']+ddat['shift']
+    draw.ellipse([ddat['x1'], ddat['y1'], ddat['x1']+400, ddat['y1']+200],'green')
+    draw.ellipse([ddat['xe1'], ddat['ye1'], ddat['xe1']+40, ddat['ye1']+40],'blue')
+    draw.ellipse([ddat['xe2'], ddat['ye2'], ddat['xe2']+40, ddat['ye2']+40],'blue')
+    
+    return status
+    
+def drawalienb(draw, ddat,i):
+    status=0
+
+    #TODO   
+    #this draws the second alien(b)
+    #eyes don't get shifted
+    if i%10==0:
+        ddat['shifteyeb']=ddat['shifteyeb']*-1
+    ddat['x1b']=ddat['x1b']+ddat['shiftb']
+    ddat['xe1b']=ddat['xe1b']+ddat['shifteyeb']+ddat['shiftb']
+    ddat['xe2b']=ddat['xe2b']+ddat['shifteyeb']+ddat['shiftb']
+    draw.ellipse([ddat['x1b'], ddat['y1b'], ddat['x1b']+400, ddat['y1b']+200],'green')
+    draw.ellipse([ddat['xe1b'], ddat['ye1b'], ddat['xe1b']+40, ddat['ye1b']+40],'blue')
+    draw.ellipse([ddat['xe2b'], ddat['ye2b'], ddat['xe2b']+40, ddat['ye2b']+40],'blue')
+
+    return status
+
+
+
+
 #this gets window ready
 #window=tk.Tk()
 #window.title('Animation')
@@ -38,34 +105,14 @@ iwidth = 2700
 iheight = 1600
 
 window=windowprep(iwidth, iheight)
+ddat=initdrawdata()
 
 #this makes an image
 str1 = "square"
 #draw.text((10, 20), str1, 'black')
 #draw.ellipse([100, 150, 300, 250],'black')
 #draw.line([50,50,100,100],'black')
-step=5
-x1=100
-y1=100
-xe1=220
-ye1=140
-xe2=320
-ye2=140
 
-#shift moves the cirles 
-shift=10
-shifteye=10
-
-
-x1b=100+700
-y1b=100
-xe1b=220+700
-ye1b=140
-xe2b=320+700
-ye2b=140
-
-shiftb=-10
-shifteyeb=10
 
 
 
@@ -73,14 +120,14 @@ shifteyeb=10
 
 
 #start of loop to draw alien at each time step
-for i in range(1,25):
+for i in range(1,10):
     
     #this adds a backround to the animation
     image1 = Image.open("images/mars-landscape-1-1200.jpg")
     image1.resize([iwidth,iheight], Image.LANCZOS)
     
     #creates the new image
-    image1 = Image.new("RGB", (iwidth, iheight), 'white')
+    #image1 = Image.new("RGB", (iwidth, iheight), 'white')
     draw = ImageDraw.Draw(image1)
     
     # draws lines but cant see with background on
@@ -97,29 +144,10 @@ for i in range(1,25):
     #draw.ellipse([950+i*step, 1000+i*step, 1150+i*step, 1100+i*step],'blue')
     #draw.ellipse([1000+i*step, 1050+i*step, 1200+i*step, 1150+i*step],'blue')
     #draw.ellipse([1050+i*step, 1100+i*step, 1250+i*step, 1200+i*step],'red')
-    
+    drawaliena(draw, ddat,i)
+    drawalienb(draw, ddat,i)
 
-    if i%10==0:
-        shifteye=shifteye*-1
-        shifteyeb=shifteyeb*-1    
-    #this draws the first alien
-    x1=x1+shift
-    xe1=xe1+shifteye+shift
-    xe2=xe2+shifteye+shift
-    draw.ellipse([x1, y1, x1+400, y1+200],'green')
-    draw.ellipse([xe1, ye1, xe1+40, ye1+40],'blue')
-    draw.ellipse([xe2, ye2, xe2+40, ye2+40],'blue')
-    
-    #TODO   
-    #this draws the second alien(b)
-    #eyes don't get shifted 
-    x1b=x1b+shiftb
-    xe1b=xe1b+shifteyeb+shiftb
-    xe2b=xe2b+shifteyeb+shiftb
-    draw.ellipse([x1b, y1b, x1b+400, y1b+200],'green')
-    draw.ellipse([xe1b, ye1b, xe1b+40, ye1b+40],'blue')
-    draw.ellipse([xe2b, ye2b, xe2b+40, ye2b+40],'blue')
-    
+  
     
     
     #if i%10==0:
