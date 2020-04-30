@@ -25,6 +25,25 @@ def windowprep(iwidth,iheight):
     
     return window
 
+def initalien(xpos, ypos, siz):
+    
+    aliendat={ 
+    'x': xpos,
+    'y': ypos,
+    'xe': xpos+120,
+    'ye': ypos+40,
+    'siz': siz,
+
+    
+    #shift moves the cirles 
+    'shift': 10,
+    'shifteye': 10    
+    }    
+    
+    return aliendat
+
+
+
 def initdrawdata():    
     ddata={ 
     'step': 5,
@@ -48,12 +67,42 @@ def initdrawdata():
     'ye2b': 140,
     
     'shiftb': -10,
-    'shifteyeb': 10
+    'shifteyeb': 10,
+    
+    'sx1': 100+350,
+    'sy1': 100+50,
+    'sxe1': 220+350,
+    'sye1': 140+50,
+    'sxe2': 320+350,
+    'sye2': 140+50,
+    
     }
     
     #acces daata item using 
     #ddata['step']
     return ddata
+
+def drawalien(draw,x,y,siz, ddat,i,shift):
+    status=0
+    #siz=200
+    ddat['siz']=siz
+    ddat['x']=x+shift
+    ddat['y']=y
+    ddat['xe']= x+shift+120
+    ddat['ye']= y+40
+    ddat['xe2']= x+shift+120+(siz/5)
+    ddat['ye2']= y+40        
+    
+    if i%10==0:
+        ddat['shifteye']=ddat['shifteye']*-1
+            
+    #this draws the first alien
+    ddat['xe']=ddat['xe']+ddat['shifteye']
+    draw.ellipse([ddat['x'], ddat['y'], ddat['x']+2*ddat['siz'], ddat['y']+ddat['siz']],'green')
+    draw.ellipse([ddat['xe'], ddat['ye'], ddat['xe']+(ddat['siz']/5), ddat['ye']+(ddat['siz']/5)],'blue')
+    draw.ellipse([ddat['xe2'], ddat['ye2'], ddat['xe2']+(ddat['siz']/5), ddat['ye2']+(ddat['siz']/5)],'blue')
+    
+    return status    
 
 def drawaliena(draw, ddat,i):
     status=0
@@ -88,9 +137,14 @@ def drawalienb(draw, ddat,i):
 
     return status
 
-
-
-
+def drawsuperalien(draw, ddata, i):
+    ddat['sx1']=ddat['sx1']
+    ddat['sxe1']=ddat['sxe1']
+    ddat['sxe2']=ddat['sxe2']
+    draw.ellipse([ddat['sx1'], ddat['sy1'], ddat['sx1']+400, ddat['sy1']+200],'green')
+    draw.ellipse([ddat['sxe1'], ddat['sye1'], ddat['sxe1']+40, ddat['sye1']+40],'blue')
+    draw.ellipse([ddat['sxe2'], ddat['sye2'], ddat['sxe2']+40, ddat['sye2']+40],'blue')
+    
 #this gets window ready
 #window=tk.Tk()
 #window.title('Animation')
@@ -106,7 +160,11 @@ iheight = 1600
 
 window=windowprep(iwidth, iheight)
 ddat=initdrawdata()
+aliens=initalien(450,100,200)
 
+
+alien1=initalien(100,100,200)
+alien2=initalien(800,100,200)
 #this makes an image
 str1 = "square"
 #draw.text((10, 20), str1, 'black')
@@ -120,7 +178,7 @@ str1 = "square"
 
 
 #start of loop to draw alien at each time step
-for i in range(1,10):
+for i in range(1,28):
     
     #this adds a backround to the animation
     image1 = Image.open("images/mars-landscape-1-1200.jpg")
@@ -146,8 +204,11 @@ for i in range(1,10):
     #draw.ellipse([1050+i*step, 1100+i*step, 1250+i*step, 1200+i*step],'red')
     drawaliena(draw, ddat,i)
     drawalienb(draw, ddat,i)
-
-  
+    x=300
+    y=400
+    siz=300
+    #Draws one-eyed super alien
+    drawalien(draw,x,y,siz, aliens,i,0)
     
     
     #if i%10==0:
@@ -158,6 +219,14 @@ for i in range(1,10):
     del draw
     
     #end of loop to draw alien
+ 
+i=i+1
+#draw super alien    
+#filename = "movie-images/aliens"+str(i)+".jpg"
+#image1.save(filename)  
+#del draw
+    
+    #draw explosion steps
 
 #ffmpeg documentation https://ffmpeg.org/ffmpeg.html#Examples-1
 #ffmpeg command    
