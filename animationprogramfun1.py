@@ -106,7 +106,9 @@ def drawalien(draw,x,y,siz, ddat,i,shift):
 
 def drawaliena(draw, ddat,i):
     status=0
-    
+    if i%40==0:
+        ddat['shift']= -ddat['shift']
+        
     if i%10==0:
         ddat['shifteye']=ddat['shifteye']*-1
             
@@ -126,6 +128,10 @@ def drawalienb(draw, ddat,i):
     #TODO   
     #this draws the second alien(b)
     #eyes don't get shifted
+    if i%40==0:
+        ddat['shiftb']= -ddat['shiftb']
+
+    
     if i%10==0:
         ddat['shifteyeb']=ddat['shifteyeb']*-1
     ddat['x1b']=ddat['x1b']+ddat['shiftb']
@@ -178,7 +184,7 @@ str1 = "square"
 
 
 #start of loop to draw alien at each time step
-for i in range(1,301):
+for i in range(1,1201):
     
     #this adds a backround to the animation
     image1 = Image.open("images/mars-landscape-1-1200.jpg")
@@ -205,7 +211,7 @@ for i in range(1,301):
     drawaliena(draw, ddat,i)
     drawalienb(draw, ddat,i)
     
-    r=100+(i/18)
+    r=200+(i/18)
     theta=i*math.pi/18
     x=300+r*math.cos((theta))
     y=100+r*math.sin((theta))
@@ -230,9 +236,9 @@ i=i+1
 #del draw
     
     #draw explosion steps
-
+#Commands to run to turn into a video
 #ffmpeg documentation https://ffmpeg.org/ffmpeg.html#Examples-1
 #ffmpeg command    
 #ffmpeg -f image1 -framerate 7 -i foo-%03d.jpeg -s WxH foo.avi
 #ffmpeg -f image1 -framerate 7 -i does_it_work%d.jpg foo.avi
-
+#ffmpeg -f image2 -framerate 20 -i aliens%d.jpg alienanimation.avi
