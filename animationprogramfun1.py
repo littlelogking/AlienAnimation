@@ -83,7 +83,7 @@ def initdrawdata():
     return ddata
 
 def drawalien(draw,x,y,siz, ddat,i,shift):
-    status=0
+    #status=0
     #siz=200
     ddat['siz']=siz
     ddat['x']=x+shift
@@ -102,7 +102,7 @@ def drawalien(draw,x,y,siz, ddat,i,shift):
     draw.ellipse([ddat['xe'], ddat['ye'], ddat['xe']+(ddat['siz']/5), ddat['ye']+(ddat['siz']/5)],'blue')
     draw.ellipse([ddat['xe2'], ddat['ye2'], ddat['xe2']+(ddat['siz']/5), ddat['ye2']+(ddat['siz']/5)],'blue')
     
-    return status    
+    return ddat    
 
 def drawaliena(draw, ddat,i):
     status=0
@@ -137,11 +137,11 @@ def drawalienb(draw, ddat,i):
 
     return status
 
-def drawsuperalien(draw, ddata, i):
+def drawsuperalien(draw, ddat, i):
     ddat['sx1']=ddat['sx1']
     ddat['sxe1']=ddat['sxe1']
     ddat['sxe2']=ddat['sxe2']
-    draw.ellipse([ddat['sx1'], ddat['sy1'], ddat['sx1']+400, ddat['sy1']+200],'green')
+    draw.ellipse([ddat['sx1'], ddat['sy1'], ddat['sx1']+400, ddat['sy1']+200],'red')
     draw.ellipse([ddat['sxe1'], ddat['sye1'], ddat['sxe1']+40, ddat['sye1']+40],'blue')
     draw.ellipse([ddat['sxe2'], ddat['sye2'], ddat['sxe2']+40, ddat['sye2']+40],'blue')
     
@@ -178,7 +178,7 @@ str1 = "square"
 
 
 #start of loop to draw alien at each time step
-for i in range(1,28):
+for i in range(1,301):
     
     #this adds a backround to the animation
     image1 = Image.open("images/mars-landscape-1-1200.jpg")
@@ -204,11 +204,14 @@ for i in range(1,28):
     #draw.ellipse([1050+i*step, 1100+i*step, 1250+i*step, 1200+i*step],'red')
     drawaliena(draw, ddat,i)
     drawalienb(draw, ddat,i)
-    x=300
-    y=400
+    
+    r=100+(i/18)
+    theta=i*math.pi/18
+    x=300+r*math.cos((theta))
+    y=100+r*math.sin((theta))
     siz=300
     #Draws one-eyed super alien
-    drawalien(draw,x,y,siz, aliens,i,0)
+    aliens=drawalien(draw,x,y,siz, aliens,i,0)
     
     
     #if i%10==0:
